@@ -9,7 +9,6 @@ DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15 #for animations
 IMAGES = {}
-
 """Initialize a global dictionary of images. This will be called once in main"""
 
 def loadImages():
