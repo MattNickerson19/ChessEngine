@@ -3,7 +3,7 @@
 import pygame as p
 from Chess import ChessEngine
 
-p.init()
+
 WIDTH = HEIGHT = 512
 DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
@@ -22,9 +22,8 @@ def loadImages():
 
 def main():
     p.init()
-    screen = p.display.set_mode(WIDTH, HEIGHT)
+    screen = p.display.set_mode((WIDTH, HEIGHT))
     clock = p.time.Clock()
-    screen.fill(p.color("white"))
     gs = ChessEngine.GameState()
     print(gs.board)
     loadImages()
@@ -33,9 +32,40 @@ def main():
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
-
+        drawGameState(screen, gs)
         clock.tick(MAX_FPS)
         p.display.flip()
+
+"""Responsible for all graphics within game state"""
+
+def drawGameState(screen, gs):
+    drawBoard(screen)
+    drawPieces(screen, gs.board)
+
+"""Draw the squares on the board"""
+def drawBoard(screen):
+    colors = [p.Color("white"), p.Color("gray")]
+    for r in range(DIMENSION):
+        for c in range(DIMENSION):
+            color = colors[((r + c)%2)]
+            p.draw.rect(screen, color, p.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+
+"""Draw the pieces on the board using GameState.board"""
+def drawPieces(screen, board):
+    for r in range(DIMENSION):
+        for c in range(DIMENSION):
+            piece = board[r][c]
+            if piece != "--": #not an empty square
+                screen.blit(IMAGES[piece], p.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+
+
+
+if __name__ == "__main__":
+    main()
+
+
 
 
 
