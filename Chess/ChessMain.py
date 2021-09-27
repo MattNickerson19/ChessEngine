@@ -40,7 +40,7 @@ def main():
                 row = location[1]//SQ_SIZE
                 if sqSelected == (row, col):
                     sqSelected = ()
-                    playerClicks = []
+                   playerClicks = []
                 else:
                     sqSelected = (row, col)
                     playerClicks.append(sqSelected)
