@@ -18,7 +18,7 @@ def loadImages():
     #Note: we can access an image by saying 'IMAGES['wp]'
 
 
-"""Main driver for code. Will handle user imput and updating graphics"""
+"""Main driver for code. Will handle user input and updating graphics"""
 
 def main():
     p.init()
@@ -28,10 +28,25 @@ def main():
     print(gs.board)
     loadImages()
     running = True
+    sqSelected = () #no square selected
+    playerClicks = [] #keep track of player clicks (2 tuples: [(6,4), (4,4)])
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+            elif e.type == p.MOUSEBUTTONDOWN:
+                location = p.mouse.get_pos()
+                col = location[0]//SQ_SIZE
+                row = location[1]//SQ_SIZE
+                if sqSelected == (row, col):
+                    sqSelected = ()
+                    playerClicks = []
+                else:
+                    sqSelected = (row, col)
+                    playerClicks.append(sqSelected)
+                if len(playerClicks) == 2:
+
+
         drawGameState(screen, gs)
         clock.tick(MAX_FPS)
         p.display.flip()
