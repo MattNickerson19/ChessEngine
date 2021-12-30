@@ -9,7 +9,7 @@ class GameState():
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "bp", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
             ["wR", "wN", "wB", "wQ", "wK", "wB", "wK", "wR"]]
 
@@ -66,6 +66,7 @@ class GameState():
                 moves.append(Move((r, c), (r-1, c), self.board))
                 if r == 6 and self.board[r-2][c] == "--":  #2 square pawn adnvance
                     moves.append(Move((r, c), (r-2, c), self.board))
+            #captures
             if c-1 >= 0: #captures to left
                 if self.board[r-1][c-1][0] == 'b': #enemy piece to capture
                     moves.append(Move((r, c), (r-1, c-1), self.board))
@@ -74,7 +75,17 @@ class GameState():
                     moves.append(Move((r, c), (r - 1, c + 1), self.board))
 
         else: #black pawn moves
-            pass
+            if self.board[r + 1][c] == "--":  # 1 square move
+                moves.append(Move((r, c), (r + 1, c), self.board))
+                if r == 1 and self.board[r + 2][c] == "--": # 2 square move
+                    moves.append(Move((r, c), (r + 2, c), self.board))
+            #captures
+            if c - 1 >= 0:  # captures to left
+                if self.board[r + 1][c - 1][0] == 'w':  # enemy piece to capture
+                    moves.append(Move((r, c), (r + 1, c - 1), self.board))
+            if c + 1 <= 7:  # captures to right
+                if self.board[r + 1][c + 1][0] == 'w':  # enemy to capture
+                    moves.append(Move((r, c), (r + 1, c + 1), self.board))
     '''
     Get all possible moves for the rook at row and col
     '''
