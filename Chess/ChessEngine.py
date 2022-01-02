@@ -86,11 +86,30 @@ class GameState():
             if c + 1 <= 7:  # captures to right
                 if self.board[r + 1][c + 1][0] == 'w':  # enemy to capture
                     moves.append(Move((r, c), (r + 1, c + 1), self.board))
+
+            #add pawn promotions
     '''
     Get all possible moves for the rook at row and col
     '''
     def getRookMoves(self, r, c, moves):
-        pass
+        directions = ((-1, 0), (0, -1), (1, 0), (0, 1)) #up, left, down, right
+        enemyColor = "b" if self.whiteToMove else "w"
+        for d in directions:
+            for i in range(1, 8):
+                endRow = r + d[0] * i
+                endCol = c + d[1] * i
+                if 0 <= endRow < 8 and 0 <= endCol < 8:
+                    endPiece = self.board[endRow][endCol]
+                    if endPiece == "--": #empty space valid
+                        moves.append(Move((r, c), (endRow, endCol), self.board))
+                    elif endPiece[0] == enemyColor: #enemy piece valid
+                        moves.append(Move((r, c), (endRow, endCol), self.board))
+                        break
+                    else:
+                        break
+                else:
+                    break
+
 
     '''
         Get all possible moves for the knight at row and col
